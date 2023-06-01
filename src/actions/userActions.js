@@ -1,24 +1,24 @@
-// Action types
-export const EDIT_USER = "EDIT_USER";
-export const SAVE_USER = "SAVE_USER";
-export const CANCEL_EDITING = "CANCEL_EDITING";
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
-// Action creators
-export const editUser = () => {
+export const loginRequest = (credentials) => {
   return {
-    type: EDIT_USER,
+    type: LOGIN_REQUEST,
+    payload: credentials,
   };
 };
 
-export const saveUser = (userData) => {
+export const loginSuccess = (user) => {
   return {
-    type: SAVE_USER,
-    payload: userData,
+    type: LOGIN_SUCCESS,
+    payload: user,
   };
 };
 
-export const cancelEditing = () => {
+export const loginFailure = (error) => {
   return {
-    type: CANCEL_EDITING,
+    type: LOGIN_FAILURE,
+    payload: error,
   };
 };

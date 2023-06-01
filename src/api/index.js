@@ -6,15 +6,20 @@ const usersDb = {
     "luis@boats.com": {
       email: "luis@boats.com",
       password: "123456",
+      data: {
+        name: 'Luis Sanchez',
+        email: 'luis@boats.com',
+        address: '123 Miami Beach',
+      }
     },
   };
   
   // Function to log in a user
   function loginUser(email, password) {
     if (usersDb.hasOwnProperty(email) && usersDb[email].password === password) {
-      return { success: true, message: "Login successful" };
+      return { success: true, message: "Login successful", data: usersDb[email].data };
     } else {
-      return { success: false, message: "Invalid email or password" };
+      throw Error('invalid user')
     }
   }
   

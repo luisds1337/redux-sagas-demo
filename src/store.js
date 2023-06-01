@@ -6,7 +6,7 @@ import rootSaga from "./sagas";
 // Create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
 
-// Create the Redux store with the root reducer and saga middleware
+// Create the Redux store with the rootReducer and applyMiddleware
 const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 
 // Run the root saga

@@ -1,29 +1,33 @@
-import { EDIT_USER, SAVE_USER, CANCEL_EDITING } from "../actions/userActions";
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from "../actions/userActions";
 
 const initialState = {
-  name: "Luis Sanchez",
-  email: "luis@boats.com",
-  address: "123 Miami Beach",
-  isEditing: false,
+  userData: null,
+  isLoading: false,
+  error: null,
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case EDIT_USER:
+    case LOGIN_REQUEST:
       return {
         ...state,
-        isEditing: !state.isEditing,
+        isLoading: true,
+        error: null,
       };
-    case SAVE_USER:
+    case LOGIN_SUCCESS:
+      console.log('success payload', action.payload)
       return {
         ...state,
-        ...action.payload,
-        isEditing: false,
+        userData: action.payload,
+        isLoading: false,
+        error: null,
       };
-    case CANCEL_EDITING:
+    case LOGIN_FAILURE:
       return {
         ...state,
-        isEditing: false,
+        userData: null,
+        isLoading: false,
+        error: action.payload,
       };
     default:
       return state;

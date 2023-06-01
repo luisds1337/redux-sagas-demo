@@ -1,22 +1,28 @@
-import { takeEvery, put, delay } from "redux-saga/effects";
-import { EDIT_USER, SAVE_USER } from "../actions/userActions";
+import { takeLatest, put, delay } from "redux-saga/effects";
+import { loginSuccess, loginFailure, LOGIN_REQUEST } from "../actions/userActions";
+import api from "../api";
 
-// Mock asynchronous task
-function* saveUserAsync(userData) {
-  // Simulate API call or async operation
-  yield delay(2000); // Delay for 2 seconds
+// Worker saga
+function* login(action) {
+  try {
+    // Extract the login credentials from the action payload
+    const { username, password } = action.payload;
 
-  // Dispatch success action
-  yield put({ type: SAVE_USER, payload: userData });
+    yield delay(2000);
+
+    // Call the API to perform the login
+    const { data } = api.loginUser(username, password)
+
+    // Dispatch the login success action
+    yield put(loginSuccess(data));
+
+  } catch (error) {
+    // Dispatch the login failure action
+    yield put(loginFailure(error.message));
+  }
 }
 
 // Watcher saga
-export function* watchUserActions() {
-  yield takeEvery(EDIT_USER, function* (action) {
-    // Retrieve user data from the action payload
-    const userData = action.payload;
-
-    // Dispatch an async action to save the user data
-    yield saveUserAsync(userData);
-  });
+export function* watchLogin() {
+  yield takeLatest(LOGIN_REQUEST, login);
 }
