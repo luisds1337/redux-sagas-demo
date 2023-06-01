@@ -55,8 +55,9 @@ const LoginPage = (props) => {
             onChange={handleInputChange}
           />
         </div>
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? "Logging in..." : "Login"}
+        {isLoading && "Logging in..."}
+        <button type="submit">
+          Login
         </button>
         {error && <p>{error}</p>}
       </form>
@@ -65,7 +66,6 @@ const LoginPage = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     user: state.user.userData,
     isLoading: state.user.isLoading,

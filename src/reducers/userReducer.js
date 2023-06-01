@@ -15,7 +15,6 @@ const userReducer = (state = initialState, action) => {
         error: null,
       };
     case LOGIN_SUCCESS:
-      console.log('success payload', action.payload)
       return {
         ...state,
         userData: action.payload,

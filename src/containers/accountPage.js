@@ -20,7 +20,6 @@ const AccountPage = (props) => {
 
 // Map Redux state to component props
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     user: state.user.userData,
   };

@@ -1,4 +1,4 @@
-import { takeLatest, put, delay } from "redux-saga/effects";
+import { takeLatest, put, delay, call, takeEvery } from "redux-saga/effects";
 import { loginSuccess, loginFailure, LOGIN_REQUEST } from "../actions/userActions";
 import api from "../api";
 
@@ -10,11 +10,10 @@ function* login(action) {
 
     yield delay(2000);
 
-    // Call the API to perform the login
-    const { data } = api.loginUser(username, password)
+    const response = yield call(api.loginUser, username, password);    
 
     // Dispatch the login success action
-    yield put(loginSuccess(data));
+    yield put(loginSuccess(response));
 
   } catch (error) {
     // Dispatch the login failure action

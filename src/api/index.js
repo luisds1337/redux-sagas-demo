@@ -17,7 +17,7 @@ const usersDb = {
   // Function to log in a user
   function loginUser(email, password) {
     if (usersDb.hasOwnProperty(email) && usersDb[email].password === password) {
-      return { success: true, message: "Login successful", data: usersDb[email].data };
+      return usersDb[email].data
     } else {
       throw Error('invalid user')
     }
