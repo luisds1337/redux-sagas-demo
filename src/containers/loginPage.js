@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import api from '../api';
 
 const LoginPage = () => {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -13,17 +17,30 @@ const LoginPage = () => {
   };
 
   const handleSubmit = (event) => {
+    setLoading(true);
+
     event.preventDefault();
-    // Here, you can add your logic to handle the login request
-    // For now, let's just display the entered email and password in the console
-    console.log('Email:', email);
-    console.log('Password:', password);
+
+    const response = api.loginUser(email, password)
+    if(!response.success){
+      setLoading(false)
+      window.alert(response.message)
+    }else {
+        setTimeout(() => {
+            setLoading(false)
+            window.location.href = '/home';
+        },3000)
+    }
   };
 
   return (
-    <div>
-      <h1>Login Page</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="center">
+      <h1>Login</h1>
+      {loading ? (
+        <div>Loading....</div>
+      ): (
+        <>
+        <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email:</label>
         <input
           type="email"
@@ -42,6 +59,11 @@ const LoginPage = () => {
         <br />
         <button type="submit">Login</button>
       </form>
+      <p>
+        Don't have an account? <Link to="/register">Register</Link>
+      </p>
+      </>
+      )}
     </div>
   );
 };
